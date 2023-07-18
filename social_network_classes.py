@@ -9,7 +9,7 @@ class SocialNetwork:
         # function to save social media to a file on disk 
         # hint: look up how to use python's inbuil json module to turn objects to json
         # you can write this json unto a file on disk
-        pass
+        pass 
 
     ## For more challenge try this
     def reload_social_media(self):
@@ -18,21 +18,72 @@ class SocialNetwork:
         pass
 
     def  create_account(self):
-        #implement function that creates account here
+        ##implement function that creates account here
+        name = input("Enter your name: ")
+        age = input("Enter your age: ")
+        person = Person(name, age)
+        self.list_of_people.append(person)
         print("Creating ...")
-        pass
+        
+    def view_friends(self, person):
+        print("Friend list of", person.id)
+        for friend in person.friendlist:
+            print(friend.id)
 
+    def view_messages(self, person):
+        print("Messages:")
+        for message in person.messages:
+            print(message)
+    
 
 class Person:
     def __init__(self, name, age):
         self.id = name
         self.year = age
         self.friendlist = []
+        self.blocked_friends = []
+        self.messages = []
+
+
 
     def add_friend(self, person_object):
-        #implement adding friend. Hint add to self.friendlist
-        pass
+        if person_object not in self.friendlist:
+            self.friendlist.append(person_object)
+            print(person_object.id, "added as a friend.")
+            
+        else:
+            print(person_object.id, "is already a friend.")
 
-    def send_message(self):
-        #implement sending message to friend here
-        pass
+    def block_friend(self, person_object):
+        if person_object in self.friendlist:
+            self.friendlist.remove(person_object)
+            self.blocked_friends.append(person_object)
+            print(person_object.id, "is now blocked.")
+        else:
+            print(person_object.id, "is not your friend.")
+
+
+
+    def send_message(self, person_object):
+        message = input("What would you like to say? ")
+        if person_object in self.friendlist:
+            person_object.messages.append(message)
+            print("Message sent to", person_object.id)
+        else: 
+            print(person_object.id, "is not your friend")
+
+    #def view_messages(self):
+        #print("Messages received from friends:")
+        #for message in self.messages:
+        #    print(message)
+
+
+    def edit_details(self):
+        #implement editing details here
+        new_age = input("Enter new age: ")
+        new_name = input("Enter new name: ")
+        self.year = new_age
+        self.id = new_name
+
+
+
